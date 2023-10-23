@@ -1,7 +1,9 @@
-import express from "express";
+import app from "./utils/app.js";
+import { connectToDatabase } from "./db/connection.js";
 
-const app = express();
+connectToDatabase().then(() => {
+  app.listen(4000, () => console.log("Server Open AND Database Connected"));
 
-app.use(express.json());
-
-app.listen(4000, () => console.log("Server Open"));
+}).catch((err) => {
+  console.log(`Error in index: ${err}`)
+});
