@@ -15,9 +15,16 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
 const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // get user info from request body
-    console.log(req.body)
     const { name, email, password } = req.body;
-    // needed to create a salt
+
+    // check if there is already a user with this email
+    const existingUser = await User.findOne({ email })
+
+    if (existingUser) {
+      return res.status(401).send("This email is already in use.")
+    }
+
+    // if user does not exist, encrypt passwprd
     const saltRounds = 10;
     // salt created
     const salt = await bcrypt.genSalt(saltRounds);
@@ -26,7 +33,8 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     // Created new user with user info and encypted password
     const user = new User({ name, email, password: hash });
     // Store hash in your password DB
-    await user.save()
+    await user.save();
+
     return res.status(201).json({ message: "OK", id: user._id.toString() })
 
   } catch (err) {
@@ -35,4 +43,8 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export { getAllUsers, userSignUp }
+const userLogin = async (req: Request, res: Response, next: NextFunction) => {
+
+}
+
+export { getAllUsers, userSignUp, userLogin }
