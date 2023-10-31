@@ -24,11 +24,16 @@ const validate = (validations: ValidationChain[]) => {
   }
 }
 
-// custom validator chains to be validated on signup
-const signupValidator = [
-  body('name').notEmpty().withMessage('Name is required'),
+const loginValidator = [
   body('email').trim().notEmpty().withMessage('Email is required').isEmail().withMessage('Must provide a valid email'),
   body('password').trim().notEmpty().withMessage('Password is required').isLength({ min: 8, max: 20 }).withMessage('Password must have at least 8 char long and no more than 20 char')
 ];
 
-export { validate, signupValidator }
+// custom validator chains to be validated on signup
+const signupValidator = [
+  body('name').notEmpty().withMessage('Name is required'),
+  ...loginValidator
+];
+
+
+export { validate, signupValidator, loginValidator }
