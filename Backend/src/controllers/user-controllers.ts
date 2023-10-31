@@ -44,7 +44,29 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
 }
 
 const userLogin = async (req: Request, res: Response, next: NextFunction) => {
-
+  try {
+    //  acccess the email and password from the req.body
+    const { email, password } = req.body;
+    // find user with matching email
+    const existingUser = await User.findOne({ email })
+    if (!existingUser) {
+      return res.status(401).json({ message: "User not registered" });
+    }
+    // user found
+    // confirm password by comparing plain paassword with hashed paassword
+    const isMatch = await bcrypt.compare(password, existingUser.password)
+    console.log("MATCH: ", isMatch)
+    // if no match is found
+    if (!isMatch) {
+      res.status(403).send("Incorrect password");
+    }
+    // user and password have been verified
+    // create session
+    res.status(200).json({ message: "OK", id: existingUser._id.toString() })
+  } catch (err) {
+    console.log(`cannot conplete user login ${err}`);
+    return res.json({ message: "ERROR", cause: err.message })
+  }
 }
 
 export { getAllUsers, userSignUp, userLogin }
