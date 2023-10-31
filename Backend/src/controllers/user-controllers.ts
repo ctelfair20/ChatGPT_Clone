@@ -27,7 +27,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
     const user = new User({ name, email, password: hash });
     // Store hash in your password DB
     await user.save()
-    return res.status(200).json({ message: "OK", id: user._id.toString() })
+    return res.status(201).json({ message: "OK", id: user._id.toString() })
 
   } catch (err) {
     console.log(`cannot conplete user signup: ${err}`);
