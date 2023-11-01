@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { createToken } from "../utils/token-manager.js";
 
@@ -62,10 +61,19 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
       res.status(403).send("Incorrect password");
     }
     // user and password have been verified
-    // create session
+    // create jwt and cookie
     const token = createToken(existingUser._id.toString(), existingUser.email, "7d");
+    const cookieExpiresIn = new Date();
+    cookieExpiresIn.setDate(cookieExpiresIn.getDate() + 7);
+    res.cookie("auth_token", token, {
+      path: "/",
+      domain: "localhost",
+      expires: cookieExpiresIn,
+      httpOnly: true,
+      signed: true
+    });
 
-    res.status(200).json({ message: "OK", id: existingUser._id.toString(), token })
+    res.status(200).json({ message: "OK", id: existingUser._id.toString() })
   } catch (err) {
     console.log(`cannot complete user login ${err}`);
     return res.json({ message: "ERROR", cause: err.message })
