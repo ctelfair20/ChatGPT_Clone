@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { createToken } from "../utils/token-manager.js";
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -61,10 +63,11 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     }
     // user and password have been verified
     // create session
+    const token = createToken(existingUser._id.toString(), existingUser.email, "7d");
 
-    res.status(200).json({ message: "OK", id: existingUser._id.toString() })
+    res.status(200).json({ message: "OK", id: existingUser._id.toString(), token })
   } catch (err) {
-    console.log(`cannot conplete user login ${err}`);
+    console.log(`cannot complete user login ${err}`);
     return res.json({ message: "ERROR", cause: err.message })
   }
 }
