@@ -26,19 +26,18 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
 
     // if user does not exist, encrypt passwprd
     const saltRounds = 10;
-    // salt created
     const salt = await bcrypt.genSalt(saltRounds);
-    // hash created
     const hash = await bcrypt.hash(password, salt);
-    // Created new user with user info and encypted password
+    // Created new user with user info and encypted password(hash)
     const user = new User({ name, email, password: hash });
+
     // Store hash in your password DB
     await user.save();
 
     return res.status(201).json({ message: "OK", id: user._id.toString() })
 
   } catch (err) {
-    console.log(`cannot conplete user signup: ${err}`);
+    console.log(`cannot complete user signup: ${err}`);
     return res.json({ message: "ERROR", cause: err.message })
   }
 }
@@ -53,15 +52,16 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(401).json({ message: "User not registered" });
     }
     // user found
-    // confirm password by comparing plain paassword with hashed paassword
+    // confirm password by comparing plain password with hashed password
     const isMatch = await bcrypt.compare(password, existingUser.password)
-    console.log("MATCH: ", isMatch)
+
     // if no match is found
     if (!isMatch) {
       res.status(403).send("Incorrect password");
     }
     // user and password have been verified
     // create session
+
     res.status(200).json({ message: "OK", id: existingUser._id.toString() })
   } catch (err) {
     console.log(`cannot conplete user login ${err}`);
