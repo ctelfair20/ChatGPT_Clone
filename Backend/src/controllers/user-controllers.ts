@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { createToken } from "../utils/token-manager.js";
+import { COOKIE_NAME } from "../utils/constants.js";
 
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -34,6 +35,26 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
 
     // Store hash in your password DB
     await user.save();
+    // user and password have been verified
+    // Clear any old cookies regardless of expiration date
+    res.clearCookie(COOKIE_NAME, {
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      signed: true
+    });
+
+    // create jwt and cookie
+    const token = createToken(existingUser._id.toString(), existingUser.email, "7d");
+    const cookieExpiresIn = new Date();
+    cookieExpiresIn.setDate(cookieExpiresIn.getDate() + 7);
+    res.cookie(COOKIE_NAME, token, {
+      path: "/",
+      domain: "localhost",
+      expires: cookieExpiresIn,
+      httpOnly: true,
+      signed: true
+    });
 
     return res.status(201).json({ message: "OK", id: user._id.toString() })
 
@@ -60,12 +81,21 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
     if (!isMatch) {
       res.status(403).send("Incorrect password");
     }
+
+    // before creating a new cookie, clear any old ones regardless of expiration date
+    res.clearCookie(COOKIE_NAME, {
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      signed: true
+    });
+
     // user and password have been verified
     // create jwt and cookie
     const token = createToken(existingUser._id.toString(), existingUser.email, "7d");
     const cookieExpiresIn = new Date();
     cookieExpiresIn.setDate(cookieExpiresIn.getDate() + 7);
-    res.cookie("auth_token", token, {
+    res.cookie(COOKIE_NAME, token, {
       path: "/",
       domain: "localhost",
       expires: cookieExpiresIn,
