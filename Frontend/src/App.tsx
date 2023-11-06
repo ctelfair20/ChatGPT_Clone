@@ -3,7 +3,7 @@ import Header from "./components/Header"
 import Home from "./pages/Home"
 import Chats from "./pages/Chats"
 import Login from "./pages/Login"
-import SignUp from "./pages/SignUp"
+import Signup from "./pages/Signup"
 import NotFound from "./pages/NotFound"
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/chats" element={<Chats />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/notFound" element={<NotFound />} />
       </Routes>
     </main>
