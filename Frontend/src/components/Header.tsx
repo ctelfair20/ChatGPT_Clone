@@ -1,11 +1,12 @@
-import { AppBar, Box, Toolbar } from "@mui/material"
+import { AppBar, Toolbar } from "@mui/material"
+import Logo from "./shared/Logo"
 
 const Header = () => {
   return (
-    <AppBar sx={{ bgcolor: "transparent", boxShadow: "none", position: "static" }}>
+    <AppBar sx={{ bgcolor: "transparent", boxShadow: "none", position: "static", }}>
+      {/* this toolbar seems is flexed by defualt */}
       <Toolbar>
-        asdfghj
-        <Box sx={{ bgcolor: "red", height: "100px", width: "100px" }}></Box>
+        <Logo></Logo>
       </Toolbar>
     </AppBar>
   )
