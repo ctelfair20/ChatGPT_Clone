@@ -27,8 +27,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signup = async (name: string, email: string, password: string) => { }
   const logout = async () => { }
 
+  const value = {
+    user,
+    isLoggedIn,
+    login,
+    logout,
+    signup
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, signup, logout }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   )
