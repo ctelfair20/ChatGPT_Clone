@@ -8,16 +8,13 @@ const Login = () => {
       height="100%"
       display="flex"
       flex={1}
-      style={{ background: 'red' }}
     >
-      RED
       <Box
         padding={8}
         mt={8}
         display={{ md: "flex", sm: "none", sx: "none" }}
       >
         <img src="airobot.png" alt="Robot" style={{ width: "400px" }} />
-        <Box style={{ background: 'green' }}>Flexing?</Box>
       </Box>
 
       <Box
@@ -28,7 +25,6 @@ const Login = () => {
         padding={2}
         ml="auto"
         mt={16}
-        style={{ background: "blue" }}
       >
         <form style={{
           margin: "auto",
@@ -36,7 +32,6 @@ const Login = () => {
           boxShadow: "10px 10px 20px #000",
           borderRadius: "10px",
           border: "none",
-          background: "yellow"
         }}
         >
           <Box
@@ -44,7 +39,6 @@ const Login = () => {
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              background: "orange"
             }}
           >
             <Typography
