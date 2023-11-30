@@ -29,6 +29,15 @@ const Login = () => {
         mt={16}
         style={{ background: "blue" }}
       >
+        <form style={{
+          margin: "auto",
+          padding: "30px",
+          boxShadow: "10px 10px 20px #000",
+          borderRadius: "10px",
+          border: "none",
+          background: "yellow"
+        }}
+        ></form>
       </Box>
     </Box>
   )
