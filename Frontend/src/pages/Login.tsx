@@ -46,7 +46,12 @@ const Login = () => {
               background: "orange"
             }}
           >
-            <Typography variant="h4" textAlign="center" padding={2} fontWeight={600}>
+            <Typography
+              variant="h4"
+              textAlign="center"
+              padding={2}
+              fontWeight={600}
+            >
               Login
             </Typography>
           </Box>
