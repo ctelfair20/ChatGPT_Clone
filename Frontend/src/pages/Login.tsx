@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 
 const Login = () => {
   return (
@@ -37,7 +37,20 @@ const Login = () => {
           border: "none",
           background: "yellow"
         }}
-        ></form>
+        >
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              background: "orange"
+            }}
+          >
+            <Typography variant="h4" textAlign="center" padding={2} fontWeight={600}>
+              Login
+            </Typography>
+          </Box>
+        </form>
       </Box>
     </Box>
   )
