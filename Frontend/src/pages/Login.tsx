@@ -1,4 +1,5 @@
 import { Box, Typography } from "@mui/material"
+import CustomizedInput from "../components/shared/CustomizedInput"
 
 const Login = () => {
   return (
@@ -54,6 +55,8 @@ const Login = () => {
             >
               Login
             </Typography>
+            <CustomizedInput name="email" type="email" label="Email" />
+            <CustomizedInput name="password" type="password" label="Password" />
           </Box>
         </form>
       </Box>
