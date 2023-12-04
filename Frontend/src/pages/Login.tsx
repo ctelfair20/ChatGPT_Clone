@@ -1,15 +1,26 @@
 import { Box, Button, Typography } from "@mui/material"
 import { MdOutlineLogin } from "react-icons/md"
 import CustomizedInput from "../components/shared/CustomizedInput"
+import { useAuthContext } from "../context/AuthContext"
+import toast from "react-hot-toast"
 
 const Login = () => {
+  const auth = useAuthContext();
 
-  const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget)
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
     console.log('email: ', email, 'pass: ', password);
+
+    try {
+      toast.loading("Signing In...", { id: "Login" })
+      await auth?.login(email, password);
+      toast.success("Sucessfully Signed In", { id: "Login" });
+    } catch (error) {
+      toast.error("Sign In Failed", { id: "Login" })
+    }
   }
 
   return (

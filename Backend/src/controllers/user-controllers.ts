@@ -56,7 +56,7 @@ const userSignUp = async (req: Request, res: Response, next: NextFunction) => {
       signed: true
     });
 
-    return res.status(201).json({ message: "OK", id: user._id.toString() })
+    return res.status(201).json({ message: "OK", name: existingUser.name, email: existingUser.email })
 
   } catch (err) {
     console.log(`cannot complete user signup: ${err}`);
@@ -103,7 +103,7 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
       signed: true
     });
 
-    res.status(200).json({ message: "OK", id: existingUser._id.toString() })
+    res.status(200).json({ message: "OK", name: existingUser.name, email: existingUser.email })
   } catch (err) {
     console.log(`cannot complete user login ${err}`);
     return res.json({ message: "ERROR", cause: err.message })
