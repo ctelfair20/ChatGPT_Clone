@@ -10,6 +10,8 @@ function CustomizedInput({ name, type, label }: Props) {
 
   return (
     <TextField
+      // look into what this does to css
+      margin="normal"
       InputLabelProps={{
         style: { color: "white" }
       }}
