@@ -3,6 +3,15 @@ import { MdOutlineLogin } from "react-icons/md"
 import CustomizedInput from "../components/shared/CustomizedInput"
 
 const Login = () => {
+
+  const onHandleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email');
+    const password = formData.get('password');
+    console.log('email: ', email, 'pass: ', password);
+  }
+
   return (
     <Box
       width="100%"
@@ -27,13 +36,15 @@ const Login = () => {
         ml="auto"
         mt={16}
       >
-        <form style={{
-          margin: "auto",
-          padding: "30px",
-          boxShadow: "10px 10px 20px #000",
-          borderRadius: "10px",
-          border: "none",
-        }}
+        <form
+          onSubmit={(e) => onHandleSubmit(e)}
+          style={{
+            margin: "auto",
+            padding: "30px",
+            boxShadow: "10px 10px 20px #000",
+            borderRadius: "10px",
+            border: "none",
+          }}
         >
           <Box
             sx={{
