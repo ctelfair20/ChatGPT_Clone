@@ -1,4 +1,5 @@
 import { Box, Button, Typography } from "@mui/material"
+import { MdOutlineLogin } from "react-icons/md"
 import CustomizedInput from "../components/shared/CustomizedInput"
 
 const Login = () => {
@@ -65,6 +66,7 @@ const Login = () => {
                   color: "black"
                 }
               }}
+              endIcon={<MdOutlineLogin />}
             >Login</Button>
           </Box>
         </form>
