@@ -12,7 +12,6 @@ const Login = () => {
     const formData = new FormData(e.currentTarget)
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
-    console.log('email: ', email, 'pass: ', password);
 
     try {
       toast.loading("Signing In...", { id: "Login" })
