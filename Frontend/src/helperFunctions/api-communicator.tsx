@@ -6,6 +6,5 @@ export const userLogin = async (email: string, password: string) => {
     throw new Error("Cannot login")
   }
   const data = res.data
-  console.log(data)
   return data;
 }
