@@ -8,3 +8,13 @@ export const userLogin = async (email: string, password: string) => {
   const data = res.data
   return data;
 }
+
+export const checkAuthStatus = async () => {
+  const res = await axios.get("user/auth-status");
+  if (res.status !== 200) {
+    throw new Error("Cannot authenicate")
+  }
+  console.log('we are verified!')
+  const data = await res.data
+  return data;
+}
