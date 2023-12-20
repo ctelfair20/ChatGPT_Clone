@@ -110,4 +110,24 @@ const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   }
 }
 
-export { getAllUsers, userSignUp, userLogin }
+const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const existingUser = await User.findById(res.locals.jwtData.id)
+    if (!existingUser) {
+      return res.status(401).json({ message: "User not registered or Token malfunction" });
+    }
+
+    // user found, check for matching id's
+    if (existingUser.id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).json({ message: "Permission mismatch" });
+    }
+
+    res.status(200).json({ message: "OK", name: existingUser.name, email: existingUser.email })
+
+  } catch (err) {
+    console.log(`cannot complete user login ${err}`);
+    return res.json({ message: "ERROR", cause: err.message })
+  }
+}
+
+export { getAllUsers, userSignUp, userLogin, verifyUser }
