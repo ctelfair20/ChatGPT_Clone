@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { COOKIE_NAME } from "./constants.js";
-import { resolve } from "path";
-import { rejects } from "assert";
 
 export const createToken = (id: string, email: string, expiresIn: string) => {
   const payload = { id, email };
@@ -22,7 +20,6 @@ export const verifyToken = async (req: Request, res: Response, nxt: NextFunction
         reject(err.message);
         return res.status(401).json({ message: "token expired" });
       } else {
-        console.log("verification of token successful")
         resolve();
         res.locals.jwtData = success;
         return nxt();

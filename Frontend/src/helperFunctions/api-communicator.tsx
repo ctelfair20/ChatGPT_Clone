@@ -14,7 +14,6 @@ export const checkAuthStatus = async () => {
   if (res.status !== 200) {
     throw new Error("Cannot authenicate")
   }
-  console.log('we are verified!')
   const data = await res.data
   return data;
 }
