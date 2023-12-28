@@ -117,7 +117,7 @@ const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
       return res.status(401).json({ message: "User not registered or Token malfunction" });
     }
 
-    // user found, check for matching id's
+    // user found, check to see that the id extracted from the token matches the user id
     if (existingUser.id.toString() !== res.locals.jwtData.id) {
       return res.status(401).json({ message: "Permission mismatch" });
     }

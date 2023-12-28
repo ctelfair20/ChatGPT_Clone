@@ -7,7 +7,7 @@ const Chats = () => {
         child
         <Box sx={{ display: "flex", width: "100%", height: "60vh", bgcolor: "rgb(17,29,39)", borderRadius: 5, flexDirection: "column", mx: 3 }}>
           grand child
-          <Avatar></Avatar>
+          <Avatar sx={{ mx: "auto", my: 2, bgcolor: "white", color: "black", fontWeight: 700, }}></Avatar>
         </Box>
       </Box>
     </Box>
