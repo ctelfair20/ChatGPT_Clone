@@ -25,6 +25,7 @@ const Chats = () => {
         <Box sx={{ display: "flex", width: "100%", height: "60vh", bgcolor: "rgb(17,29,39)", borderRadius: 5, flexDirection: "column", mx: 3 }}>
           <Avatar sx={{ mx: "auto", my: 2, bgcolor: "white", color: "black", fontWeight: 700, }}
           >
+            {/* TODO:fix this to know the difference between one or two names */}
             {auth?.user?.name[0]}
           </Avatar>
           <Typography sx={{ mx: "auto", fontFamily: "work sans" }}>
