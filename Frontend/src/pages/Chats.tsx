@@ -1,24 +1,28 @@
+import { useRef, useState } from "react";
 import { Avatar, Box, Button, IconButton, Typography } from "@mui/material"
-import { useAuthContext } from "../context/AuthContext"
 import { red } from "@mui/material/colors";
 import { IoMdSend } from "react-icons/io"
+import { useAuthContext } from "../context/AuthContext"
 import ChatItem from "../components/chat/ChatItem";
 
-const chatsMessages = [
-  { "role": "user", "content": "Hello, AI assistant!" },
-  { "role": "assistant", "content": "Hi there! How can I help you today?" },
-  { "role": "user", "content": "I need information about weather forecasts." },
-  { "role": "assistant", "content": "Sure! In which location would you like to know the weather?" },
-  { "role": "user", "content": "Provide the weather forecast for New York." },
-  { "role": "assistant", "content": "The weather in New York is currently 72°F with clear skies." },
-  { "role": "user", "content": "What's on my calendar for today?" },
-  { "role": "assistant", "content": "Let me check. You have a meeting at 2:00 PM and a deadline at 5:00 PM." },
-  { "role": "user", "content": "Set a reminder for my meeting." },
-  { "role": "assistant", "content": "Reminder set for your meeting at 2:00 PM." },
-]
+type Message = {
+  role: "user" | "assistant";
+  content: string;
+}
 
 const Chats = () => {
   const auth = useAuthContext();
+  const [chatMessages, setChatMessages] = useState<Message[]>([])
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSubmit = async () => {
+    const userContent = inputRef.current?.value as string;
+    if (inputRef && inputRef.current) {
+      inputRef.current.value = "";
+    }
+    const newMessage: Message = { role: "user", content: userContent };
+    setChatMessages((prev) => [...prev, newMessage])
+  }
 
   return (
     <Box sx={{ display: "flex", width: "100%", height: "100%", mt: 3, gap: 3 }}>
@@ -53,11 +57,11 @@ const Chats = () => {
         </Typography>
         <Box sx={{ width: "100%", height: "60vh", borderRadius: 3, mx: "auto", display: "flex", flexDirection: "column", overflow: "scroll", overflowX: "hidden", overflowY: "auto", scrollBehavior: "smooth" }}
         >
-          {chatsMessages.map((chat) => <ChatItem role={chat.role} content={chat.content} />)}
+          {chatMessages.map((chat) => <ChatItem role={chat.role} content={chat.content} />)}
         </Box>
         <div style={{ width: "100%", backgroundColor: "rgb(17,27,39)", padding: "20px", borderRadius: "8px", display: "flex", margin: "auto", }}>
-          <input type="text" style={{ width: "100%", backgroundColor: "transparent", padding: "10px", border: "none", outline: "none", color: "white", fontSize: "20px" }} />
-          <IconButton sx={{ ml: "auto", color: "white" }}
+          <input ref={inputRef} type="text" style={{ width: "100%", backgroundColor: "transparent", padding: "10px", border: "none", outline: "none", color: "white", fontSize: "20px" }} />
+          <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white" }}
           >
             <IoMdSend />
           </IconButton>
