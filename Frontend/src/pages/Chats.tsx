@@ -57,7 +57,7 @@ const Chats = () => {
         </Typography>
         <Box sx={{ width: "100%", height: "60vh", borderRadius: 3, mx: "auto", display: "flex", flexDirection: "column", overflow: "scroll", overflowX: "hidden", overflowY: "auto", scrollBehavior: "smooth" }}
         >
-          {chatMessages.map((chat) => <ChatItem role={chat.role} content={chat.content} />)}
+          {chatMessages.map((chat, index) => <ChatItem role={chat.role} content={chat.content} key={index} />)}
         </Box>
         <div style={{ width: "100%", backgroundColor: "rgb(17,27,39)", padding: "20px", borderRadius: "8px", display: "flex", margin: "auto", }}>
           <input ref={inputRef} type="text" style={{ width: "100%", backgroundColor: "transparent", padding: "10px", border: "none", outline: "none", color: "white", fontSize: "20px" }} />
