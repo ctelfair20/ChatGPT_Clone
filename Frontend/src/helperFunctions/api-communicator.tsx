@@ -17,3 +17,12 @@ export const checkAuthStatus = async () => {
   const data = await res.data
   return data;
 }
+
+export const sendChatResquest = async (message: string) => {
+  const res = await axios.post("chat/new", { message });
+  if (res.status !== 200) {
+    throw new Error("Cannot send user chat message")
+  }
+  const data = await res.data
+  return data;
+}
